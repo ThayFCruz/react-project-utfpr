@@ -1,0 +1,96 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+ul li.feito {
+  color: #66bb6a;
+}
+
+ul li.erro {
+  color: red;
+}
+
+ul li.refazer {
+  color: yellow;
+}
+
+ul li.atencao {
+  color: yellow;
+  animation: blinkColor 1s steps(1, start) infinite;
+}
+
+.character-list-wrapper {
+  .character-form-options-container {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .field {
+      width: 31%;
+
+      select, input {
+        border-color: #fff !important;
+      }
+    }
+
+    button {
+      width: 100%;
+      height: 56px;
+    }
+  }
+}
+
+.character-list-wrapper .character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.character-list-wrapper .character-list .character-item {
+  max-width: 19%;
+}
+
+.character-list-wrapper .character-list .character-item img {
+  width: 100%;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  max-width: 100%;
+  max-height: 300px;
+}
+
+.character-list-wrapper .character-list .character-item .character-info {
+  padding: 10px 20px 20px;
+  min-height: 120px;
+}
+
+.character-list-wrapper .character-list .character-item .character-info h4 {
+  margin: 0 0 10px;
+}
+
+.character-list-wrapper .character-list .character-item .character-info p {
+  margin: 0;
+}
+
+
+
+
+
+
+
+
+@keyframes blinkColor {
+  0% {
+    color: #e65100;
+  }
+
+  50% {
+    color: red;
+  }
+
+  100% {
+    color: #e65100;
+  }
+}
