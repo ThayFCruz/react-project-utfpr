@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 export default function DataList() {
-    const { data, type } = useApi();
+    const { data, type, errorMessage } = useApi();
 
     const listItems = useMemo(() => {
         if (!Array.isArray(data) || !data.length) return [];
@@ -18,11 +18,11 @@ export default function DataList() {
         return data.map((item) => {
             if (type === "character") {
                 return (
-                    <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Card sx={{ display: "flex", alignItems: "center" }}>
+                    <Grid item xs={12} sm={6} md={4} key={item.id} spacing={1} size={3}>
+                        <Card sx={{ display: "flex", flexDirection: "column", width: "100%", minHeight: 450 }}>
                             <CardMedia
                                 component="img"
-                                sx={{ width: 100 }}
+                                sx={{ width: "100%"}}
                                 image={item.image}
                                 alt={item.name}
                             />
@@ -45,8 +45,8 @@ export default function DataList() {
 
             if (type === "episode") {
                 return (
-                    <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Card>
+                    <Grid item xs={12} sm={6} md={4} spacing={1} size={3} key={item.id}>
+                        <Card sx={{ width: "100%", minHeight: 150 }}>
                             <CardContent>
                                 <Typography variant="h6">{item.name}</Typography>
                                 <Typography variant="body2" color="text.secondary">
@@ -63,8 +63,8 @@ export default function DataList() {
 
             if (type === "location") {
                 return (
-                    <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Card>
+                    <Grid item xs={12} sm={6} md={4} spacing={1} size={3} key={item.id}>
+                        <Card sx={{ width: "100%", minHeight: 150 }} >
                             <CardContent>
                                 <Typography variant="h6">{item.name}</Typography>
                                 <Typography variant="body2" color="text.secondary">
@@ -85,6 +85,14 @@ export default function DataList() {
             return null;
         });
     }, [data, type]);
+
+    if (errorMessage) {
+        return (
+            <Typography color="error" variant="body1" align="center" sx={{ mt: 3 }}>
+                {errorMessage}
+            </Typography>
+        );
+    }
 
     if (data?.length) {
         return (

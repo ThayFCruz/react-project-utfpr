@@ -7,6 +7,7 @@ export function ApiProvider({ children }) {
   const [data, setData] = useState([]);
 
   const [filterByName, setFilterByName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [characterPages] = useState(42);
   const [episodePages] = useState(3);
@@ -14,7 +15,7 @@ export function ApiProvider({ children }) {
 
   async function fetchData(selectedType = type, nameFilter = filterByName) {
     try {
-
+      setErrorMessage("");
       setData([]);
 
       var baseUrl = `https://rickandmortyapi.com/api/${selectedType}`;
@@ -35,17 +36,28 @@ export function ApiProvider({ children }) {
       }
 
       const response = await fetch(searchUrl);
+
+      if (!response.ok) {
+        if (response.status == 404) {
+          throw new Error("Nenhum resultado encontrado para sua busca.");
+        } else {
+          throw new Error("Ocorreu um erro ao buscar os dados.");
+        }
+      }
+
       const json = await response.json();
 
       setData(json.results || []);
     } catch (error) {
+
+      setErrorMessage(error.message || "Erro inesperado ao buscar dados.");
       console.error("Erro ao buscar dados:", error);
       setData([]);
     }
   }
 
   return (
-    <ApiContext.Provider value={{ type, setType, data, fetchData, filterByName, setFilterByName }}>
+    <ApiContext.Provider value={{ type, setType, data, fetchData, filterByName, setFilterByName, errorMessage }}>
       {children}
     </ApiContext.Provider>
   );
