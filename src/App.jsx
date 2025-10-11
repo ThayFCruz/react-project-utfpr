@@ -29,8 +29,8 @@ function App() {
 
       <h4>Segunda parte</h4>
       <ul>
-        <li className='atencao' >Criar formulario customizado para envio de parametros</li>
-        <li>Validar campos com mensagens de erros</li>
+        <li className='feito' >Criar formulario customizado para envio de parametros</li>
+        <li className='atencao'>Validar campos com mensagens de erros</li>
       </ul>
 
       <br />

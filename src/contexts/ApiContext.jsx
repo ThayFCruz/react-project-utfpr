@@ -6,31 +6,33 @@ export function ApiProvider({ children }) {
   const [type, setType] = useState("character");
   const [data, setData] = useState([]);
 
+  const [filterByName, setFilterByName] = useState("");
 
-  // const [searchUrl, setSearchUrl] = useState("https://rickandmortyapi.com/api/");
-  const [characterPages, setCharacterPages] = useState(42);
-  const [episodePages, setEpisodePages] = useState(3);
-  const [locationPages, setLocationPages] = useState(7);
+  const [characterPages] = useState(42);
+  const [episodePages] = useState(3);
+  const [locationPages] = useState(7);
 
-  async function fetchData(selectedType = type) {
+  async function fetchData(selectedType = type, nameFilter = filterByName) {
     try {
-      // limpa os dados antes de carregar novos
+
       setData([]);
 
-      var searchUrl = "https://rickandmortyapi.com/api/"
+      var baseUrl = `https://rickandmortyapi.com/api/${selectedType}`;
 
-      if(selectedType === "character"){
-        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 42);
+      var totalPages = 1;
+
+      if (nameFilter) {
+        var searchUrl = `${baseUrl}?name=${nameFilter}`;
+
+      } else {
+        if (selectedType === "character") totalPages = characterPages;
+        if (selectedType === "episode") totalPages = episodePages;
+        if (selectedType === "location") totalPages = locationPages;
+
+        const randomPage = Math.floor(Math.random() * totalPages) + 1;
+
+        var searchUrl = `${baseUrl}?page=${randomPage}`;
       }
-
-      if(selectedType === "episode"){
-        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 3);
-      }
-
-      if(selectedType === "location"){
-        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 7);
-      }
-
 
       const response = await fetch(searchUrl);
       const json = await response.json();
@@ -38,12 +40,12 @@ export function ApiProvider({ children }) {
       setData(json.results || []);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-      setData([]); // evita ficar com dados quebrados
+      setData([]);
     }
   }
 
   return (
-    <ApiContext.Provider value={{ type, setType, data, fetchData }}>
+    <ApiContext.Provider value={{ type, setType, data, fetchData, filterByName, setFilterByName }}>
       {children}
     </ApiContext.Provider>
   );

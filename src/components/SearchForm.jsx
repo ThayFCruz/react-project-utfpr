@@ -1,20 +1,21 @@
 import { useApi } from "../contexts/ApiContext";
 import { useState } from "react";
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography, Button } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select, Typography, Button, TextField } from "@mui/material";
 
 export default function SearchForm() {
   const { type, setType, fetchData, loading } = useApi();
 
   const [selectSearchType, setSelectSearchType] = useState('');
 
+  const [filterByName, setFilterByName] = useState();
+
+  const handleFilterByName = (e) => {
+    setFilterByName(e.target.value);
+  }
+
   const handleSearch = () => {
     setType(selectSearchType);
-
-    console.log("Type padrão: " + type);
-    console.log("SelectType: " + selectSearchType);
-
-
-    fetchData(selectSearchType);
+    fetchData(selectSearchType, filterByName);
   };
 
   return (
@@ -35,6 +36,10 @@ export default function SearchForm() {
           <MenuItem value="episode">Episódio</MenuItem>
           <MenuItem value="location">Localização</MenuItem>
         </Select>
+      </FormControl>
+
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <TextField id="character-name" label="Filtrar pelo nome" variant="outlined" onChange={handleFilterByName} />
       </FormControl>
 
       <Button
