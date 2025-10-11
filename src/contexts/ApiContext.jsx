@@ -1,25 +1,44 @@
-// src/contexts/ApiContext.jsx
 import { createContext, useContext, useState } from "react";
 
 const ApiContext = createContext();
 
 export function ApiProvider({ children }) {
-  const [type, setType] = useState("character"); // padrão inicial
+  const [type, setType] = useState("character");
   const [data, setData] = useState([]);
 
-  const characterPages = 42; 
+
+  // const [searchUrl, setSearchUrl] = useState("https://rickandmortyapi.com/api/");
+  const [characterPages, setCharacterPages] = useState(42);
+  const [episodePages, setEpisodePages] = useState(3);
+  const [locationPages, setLocationPages] = useState(7);
 
   async function fetchData(selectedType = type) {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/${selectedType}`);
+      // limpa os dados antes de carregar novos
+      setData([]);
+
+      var searchUrl = "https://rickandmortyapi.com/api/"
+
+      if(selectedType === "character"){
+        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 42);
+      }
+
+      if(selectedType === "episode"){
+        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 3);
+      }
+
+      if(selectedType === "location"){
+        searchUrl = searchUrl + `${selectedType}?page=` + Math.floor(Math.random() * 7);
+      }
+
+
+      const response = await fetch(searchUrl);
       const json = await response.json();
 
-      // results para character/episode, mas location usa o mesmo formato
       setData(json.results || []);
-
-      console.log(json.results);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
+      setData([]); // evita ficar com dados quebrados
     }
   }
 
@@ -30,7 +49,6 @@ export function ApiProvider({ children }) {
   );
 }
 
-// Hook customizado pra facilitar o uso
 export function useApi() {
   return useContext(ApiContext);
 }
