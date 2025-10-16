@@ -24,12 +24,14 @@ export default function SearchForm() {
   }
 
   const handleSearch = () => {
-    if (selectSearchType) {
+    if (selectSearchType && filterByName) {
       setErrorSelectField(false);
+      setErrorTextField(false);
       setType(selectSearchType);
       fetchData(selectSearchType, filterByName);
     } else {
       setErrorSelectField(true);
+      setErrorTextField(true);
     }
   };
 
@@ -69,7 +71,7 @@ export default function SearchForm() {
         />
 
         {errorTextField && (
-          <FormHelperText>Por favor não utilize caracteres especiais ou com acentuação.</FormHelperText>
+          <FormHelperText>Por favor preencha o campo corretamente, não utilize acentos ou caracteres especiais. </FormHelperText>
         )}
       </FormControl>
 
