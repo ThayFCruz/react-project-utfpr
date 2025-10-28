@@ -13,7 +13,7 @@ function App() {
         <CssBaseline />
         <Container sx={{ py: 4 }}>
           <Typography variant="h4" sx={{ mb: 3 }}>
-           o/ Rick and Morty Explorer
+          Rick and Morty Explorer
           </Typography>
           <SearchForm />
           <DataList />
