@@ -1,5 +1,5 @@
 {
-  "homepage": "https://https-pelaquin.github.io/react-project-utfpr",
+ "homepage": "https://thayfcruz.github.io/react-project-utfpr",
   "name": "react-project-utfpr",
   "private": true,
   "version": "0.0.0",
@@ -17,7 +17,8 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.4",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
