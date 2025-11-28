@@ -12,7 +12,7 @@
   "predeploy": "npm run build",
   "deploy": "gh-pages -d dist",
   "test": "vitest",
-  "test:run": "vitest run --coverage"
+  "test:run": "vitest run"
 },
  "dependencies": {
   "@emotion/react": "^11.14.0",
