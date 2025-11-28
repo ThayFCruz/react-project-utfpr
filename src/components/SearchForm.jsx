@@ -6,7 +6,7 @@ export default function SearchForm() {
   const { type, setType, fetchData, loading } = useApi();
 
   const [selectSearchType, setSelectSearchType] = useState('');
-  const [filterByName, setFilterByName] = useState();
+  const [filterByName, setFilterByName] = useState('');
 
   const [errorSelectField, setErrorSelectField] = useState(false);
   const [errorTextField, setErrorTextField] = useState(false);
